@@ -11,25 +11,15 @@
  */
 class Solution {
 public:
-    /**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     struct TreeNode *left;
- *     struct TreeNode *right;
- * };
- */
- bool cmp(struct TreeNode* left,struct TreeNode* right)
- {
-     if(left==NULL && right==NULL)
-     return true;
-     if(left==NULL||right==NULL)
-     return false;
-     return left->val==right->val &&cmp(left->left,right->right)&&cmp(left->right,right->left);
- }
-bool isSymmetric(struct TreeNode* root){
-if(root==NULL)
-return true;
-return cmp(root->right,root->left);
-}
+    bool rec(TreeNode*root1,TreeNode*root2){
+        if(root1==NULL&&root2==NULL)return true;
+        if(root1==NULL||root2==NULL)return false;
+        if(root1->val!=root2->val)return false;
+        return rec(root1->left,root2->right)&&rec(root1->right,root2->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL)return 1;
+        return rec(root->left,root->right);
+
+    }
 };
