@@ -24,7 +24,7 @@ public:
         vector<int> v;
         TreeNode* dummy = root;
         preOrder(dummy, v);
-        TreeNode* x = new TreeNode(v[0]);
+      //  TreeNode* x = new TreeNode(v[0]);
         //root = x;
         for(int i=0; i<v.size(); i++){
             cout<<v[i]<<endl;
