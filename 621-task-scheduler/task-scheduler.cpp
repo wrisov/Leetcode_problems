@@ -1,27 +1,17 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-     unordered_map<char,int> mp;
-        int count=0;
-        for(auto it:tasks)
-        {
-            mp[it]++;
-            count=max(count,mp[it]);
+        unordered_map<char,int> mp;
+        int mx=0;
+        for(int i=0;i<tasks.size();i++){
+            mp[tasks[i]]++;
+            mx = max(mx, mp[tasks[i]]);
         }
-        int ans=(count-1)*n+count;
-        int no_with_max=1;
-        for(auto it:mp)
-        {
-            if(it.second==count)
-            {
-                ans++;
-                no_with_max++;
-            }
-            
+        int ans = (mx-1)*(n+1);
+        for(auto it: mp){
+            if(it.second == mx)
+            ans++;
         }
-        int fin_ans;
-        if(no_with_max>1) fin_ans=max((int)tasks.size(),ans-1);
-        else fin_ans= max((int)tasks.size(),ans); 
-        return fin_ans;   
+        return max(ans, (int)tasks.size());
     }
 };
