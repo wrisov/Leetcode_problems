@@ -30,7 +30,6 @@ public:
                 q.push(node->right);
             }
             ans.push_back(v);
-            v.clear();
         }
         return ans;
     }
