@@ -1,30 +1,29 @@
 class Solution {
 public:
-    std::string longestPalindrome(std::string s) {
-        std::string T = "^#";
-        for (char c : s) {
-            T += c;
-            T += '#';
+    string longestPalindrome(string s) {
+        int n = s.length();
+        vector<vector<bool>> dp(n, vector<bool>(n,false));
+        vector<int> ans = {0,0};
+        for(int i=0; i<n; i++){
+            dp[i][i]=true;
         }
-        T += "$";
-
-        int n = T.size();
-        std::vector<int> P(n, 0);
-        int C = 0, R = 0;
-
-        for (int i = 1; i < n-1; ++i) {
-            P[i] = (R > i) ? std::min(R - i, P[2*C - i]) : 0;
-            while (T[i + 1 + P[i]] == T[i - 1 - P[i]])
-                P[i]++;
-
-            if (i + P[i] > R) {
-                C = i;
-                R = i + P[i];
+        for(int i=0;i<n-1;i++){
+            if(s[i]==s[i+1]){
+                dp[i][i+1]=true;
+                ans = {i, i+1};
             }
         }
-
-        int max_len = *std::max_element(P.begin(), P.end());
-        int center_index = std::distance(P.begin(), std::find(P.begin(), P.end(), max_len));
-        return s.substr((center_index - max_len) / 2, max_len);
+        for(int diff=2; diff<n; diff++){
+            for(int i=0; i< n-diff;i++){
+                int j=i+diff;
+                if(s[i]==s[j] && dp[i+1][j-1]){
+                    dp[i][j]=true;
+                    ans = {i,j};
+                }
+            }
+        }
+        int i = ans[0];
+        int j = ans[1];
+        return s.substr(i,j-i+1);
     }
 };
