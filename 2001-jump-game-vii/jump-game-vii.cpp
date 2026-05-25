@@ -1,20 +1,37 @@
 class Solution {
 public:
     bool canReach(string s, int minJump, int maxJump) {
-      int i, j;
-    
-    s[0] = '2';
-    for (i = 1, j = 0; s[i]; i++) {
-        if (s[i] == '0') {
-            while (j < i && (s[j] != '2' || j + maxJump < i)) {
-                j++;
+
+        int n = s.size();
+
+        queue<int> q;
+
+        q.push(0);
+
+        int farthest = 0;
+
+        while(!q.empty()) {
+
+            int i = q.front();
+            q.pop();
+
+            int start = max(i + minJump, farthest + 1);
+            int end = min(i + maxJump, n - 1);
+
+            for(int j = start; j <= end; j++) {
+
+                if(s[j] == '0') {
+
+                    if(j == n - 1)
+                        return true;
+
+                    q.push(j);
+                }
             }
-            if (s[j] == '2' && j + minJump <= i) {
-                s[i] = '2';
-            }
+
+            farthest = end;
         }
-    }
-    
-    return s[i-1] == '2';  
+
+        return n == 1;
     }
 };
